@@ -1,0 +1,942 @@
+﻿<UserControl x:Class="SortingStantion.frameMain.frameMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SortingStantion.frameMain"
+             xmlns:controls="clr-namespace:SortingStantion.Controls"
+             xmlns:converters="clr-namespace:SortingStantion.Converters"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <Grid Background="#FF262626">
+
+        <Grid.Resources>
+
+            <Style TargetType="controls:S7TextBox">
+                <Setter Property="Background" Value="{StaticResource DarkColor}"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+            </Style>
+
+            <Style x:Key="ScrollBarTrackThumb"
+                    TargetType="{x:Type Thumb}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Grid x:Name="Grid">
+                                <Rectangle HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Width="Auto"
+                                Height="Auto"
+                                Fill="Transparent" />
+                                <Border x:Name="CornerScrollBarRectangle"
+                            CornerRadius="5"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Width="Auto"
+                            Height="Auto"
+                            Margin="0,1,0,1"
+                            Background="{TemplateBinding Background}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag"
+                                Value="Horizontal">
+                                    <Setter TargetName="CornerScrollBarRectangle"
+                                Property="Width"
+                                Value="Auto" />
+                                    <Setter TargetName="CornerScrollBarRectangle"
+                                Property="Height"
+                                Value="6" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled"
+            Value="false" />
+                <Setter Property="Foreground"
+            Value="#ADABAB" />
+                <Setter Property="Background"
+            Value="Transparent" />
+                <Setter Property="Width"
+            Value="7" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot"
+                        Width="7"
+                        Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.00001*" />
+                                </Grid.RowDefinitions>
+                                <Track x:Name="PART_Track"
+                            Grid.Row="0"
+                            IsDirectionReversed="true"
+                            Focusable="false">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb"
+                                    Background="{TemplateBinding Foreground}"
+                                    Style="{DynamicResource ScrollBarTrackThumb}" />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp"
+                                            Command="ScrollBar.PageDownCommand"
+                                            Opacity="0"
+                                            Focusable="false" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown"
+                                            Command="ScrollBar.PageUpCommand"
+                                            Opacity="0"
+                                            Focusable="false" />
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb"
+                                Property="IsMouseOver"
+                                Value="true">
+                                    <Setter Value="{DynamicResource ButtonSelectBrush}"
+                                TargetName="Thumb"
+                                Property="Background" />
+                                </Trigger>
+                                <Trigger SourceName="Thumb"
+                                Property="IsDragging"
+                                Value="true">
+                                    <Setter Value="{DynamicResource DarkBrush}"
+                                TargetName="Thumb"
+                                Property="Background" />
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled"
+                                Value="false">
+                                    <Setter TargetName="Thumb"
+                                Property="Visibility"
+                                Value="Collapsed" />
+                                </Trigger>
+                                <Trigger Property="Orientation"
+                                Value="Horizontal">
+                                    <Setter TargetName="GridRoot"
+                                Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="PART_Track"
+                                Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Width"
+                                Value="Auto" />
+                                    <Setter Property="Height"
+                                Value="8" />
+                                    <Setter TargetName="Thumb"
+                                Property="Tag"
+                                Value="Horizontal" />
+                                    <Setter TargetName="PageDown"
+                                Property="Command"
+                                Value="ScrollBar.PageLeftCommand" />
+                                    <Setter TargetName="PageUp"
+                                Property="Command"
+                                Value="ScrollBar.PageRightCommand" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </Grid.Resources>
+
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Top">
+
+            <!--ВЕРХНЯЯ СТРОКА-->
+            <Grid Margin="0,5,5,2" Height="80">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <!--АВТОРИЗАЦИЯ-->
+                <Button Grid.Column="0"
+                        Margin="1,0,1,2"
+                        Style="{StaticResource btnStyle}"
+                        Background="{StaticResource DarkColor}"
+                        Foreground="{StaticResource IconColor}"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        Command="{Binding AuthorizationCMD}"
+                        IsEnabled="{Binding ButtonsEnableModel.BtnAutorizationEnable}">
+                        
+                    <Grid Width="250">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Width="50"
+                              HorizontalAlignment="Left">
+                            <ContentPresenter Content="{StaticResource IconUser}"/>
+                        </Grid>
+
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Left"
+                                   TextAlignment="Left"
+                                   FontFamily="Tahoma"
+                                   DataContext="{Binding AccesLevelModel}"
+                                   FontSize="{StaticResource fontSizeButtons}"
+                                   Margin="0">
+                                <Run Text="{Binding DisplayName, Mode=OneWay}"/>
+                        </TextBlock>
+                    </Grid>
+
+                </Button>
+
+                <!--КНОПКА ПРИНЯТИЯ ЗАДАНИЕ-->
+                <Button Grid.Column="1"
+                        Margin="1,0,1,2"
+                        Style="{StaticResource btnStyle}"
+                        Background="{StaticResource DarkColor}"
+                        Foreground="{StaticResource IconColor}"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        IsEnabled="{Binding ButtonsEnableModel.BtnAcceptTaskEnable}"
+                        Command="{Binding WorkAssignment.AcceptTaskCMD}">
+
+                    <Grid Width="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Width="51">
+                            <ContentPresenter Content="{StaticResource IconAddTask}"/>
+                        </Grid>
+
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Left"
+                                   FontFamily="Tahoma"
+                                   FontSize="{StaticResource fontSizeButtons}"
+                                   Margin="0">
+                                <Run>Принять</Run>
+                                <LineBreak/>
+                                <Run>задание</Run>
+                        </TextBlock>
+
+                    </Grid>
+
+                </Button>
+
+                <!--КНОПКА ЗАВЕРШИТЬ ЗАДАНИЕ-->
+                <Button Grid.Column="2"
+                        Margin="1,0,1,2"
+                        Style="{StaticResource btnStyle}"
+                        Background="{StaticResource DarkColor}"
+                        Foreground="{StaticResource IconColor}"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        IsEnabled="{Binding ButtonsEnableModel.BtnFinishTaskEnable}"
+                        Command="{Binding WorkAssignment.FinishTaskCMD}">
+
+                    <Grid Width="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Width="51">
+                            <ContentPresenter Content="{StaticResource IconFinishTask}"/>
+                        </Grid>
+
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Left"
+                                   FontFamily="Tahoma"
+                               FontSize="{StaticResource fontSizeButtons}"
+                                   Margin="0">
+                                <Run>Завершить</Run>
+                                <LineBreak/>
+                                <Run>задание</Run>
+                        </TextBlock>
+
+                    </Grid>
+
+                </Button>
+
+
+
+
+                <!--ЧАСЫ - ПОЛЬЗОВАТЕЛЬ-->
+                <Border Grid.Column="3"
+                        Margin="0,0,0,2"
+                        BorderBrush="Transparent"
+                        BorderThickness="1,1,0,1">
+
+                    <Grid>
+
+                        <Grid Background="#FF676767"
+                              Grid.RowSpan="2"
+                              Margin="5,1,5,1">
+
+                            <!--ТЕКУЩЕЕ ВРЕМЯ-->
+                            <TextBlock Grid.Column="3"
+                                   Margin="0"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontSize="{StaticResource fontSizeData}"
+                                   Text="{Binding CurrentTime.CurrentTime}"
+                                   Foreground="{StaticResource DarkColor}"/>
+
+                            <Button Background="Transparent"
+                                    Style="{StaticResource btnStyle}" 
+                                    MouseDoubleClick="Button_MouseDoubleClick">
+
+                                <Grid Width="250"
+                                      Height="60" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+                                    <Rectangle Fill="Transparent" VerticalAlignment="Stretch"/>
+                                </Grid>
+
+
+
+                            </Button>
+
+
+                        </Grid>
+
+                    </Grid>
+
+                </Border>
+
+                <!--КНОПКА ВЫЗОВА НАСТРОЕК-->
+                <Button Grid.Column="4"
+                            Margin="0,0,0,2"
+                            BorderThickness="1"
+                            IsEnabled="{Binding ButtonsEnableModel.BtnSettingsEnable}"
+                            Style="{StaticResource btnStyle}"
+                            DataContext="{Binding ScreenEngine}"
+                            Command="{Binding OpenSettingsScreenCMD}"
+                            BorderBrush="{StaticResource GridColor}"
+                            Background="#FF292929">
+                    <Grid>
+                        <Viewbox Margin="10,0,10,10"
+                                     VerticalAlignment="Top">
+                            <ContentPresenter  Content="{StaticResource IconSettings}"/>
+                        </Viewbox>
+
+                        <TextBlock Text="НАСТРОЙКИ"
+                                       VerticalAlignment="Bottom"
+                                       HorizontalAlignment="Center"
+                                       Foreground="{StaticResource IconColor}"
+                                       FontSize="8"/>
+                    </Grid>
+                </Button>
+
+
+                <Rectangle Fill="{StaticResource DarkColor}"
+                           Grid.ColumnSpan="6"
+                           Height="1"
+                            VerticalAlignment="Bottom"/>
+
+            </Grid>
+
+            <!--ОБРАМЛЕНИЕ ВЕРХНЕЙ РАМКИ-->
+            <Border Grid.Row="1"
+                    BorderBrush="{StaticResource DarkColor}"
+                    BorderThickness="0,1,0,1" Background="#FF2B2B2B"/>
+
+            <!--ЗОНА ИНФОРМАЦИИ-->
+            <Grid Background="{StaticResource LightColor}" 
+                  Height="100"
+                  Margin="10,30,10,0"
+                  VerticalAlignment="Top">
+
+                <Border BorderThickness="0,1,0,1"
+                        BorderBrush="{StaticResource GridColor}"
+                        DataContext="{Binding Message_Engine}">
+
+                    <ContentPresenter x:Name="msgConteiner"/>
+
+
+
+                </Border>
+
+            </Grid>
+
+
+            <!--ТАБЛИЦА ЗАДАНИЯ-->
+            <Grid Background="#FF1E1E1E" 
+                  Margin="10,30,10,0"
+                  VerticalAlignment="Top">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0"
+                  Height="50" 
+                  Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="ПРОДУКТ:"
+                           Margin="10,0,0,0"
+                           FontSize="{StaticResource fontSizeData}"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                   
+                    <!--<controls:S7TextBox Address="DB1.DBD234-STR40" 
+                                        Background="Transparent"
+                                        Height="40"
+                                        FontSize="{StaticResource fontSizeData}"
+                                        Margin="105,5,25,5"
+                                        VerticalContentAlignment="Center"
+                                        Text=""
+                                        MinAccesLevel="0"
+                                        Foreground="{StaticResource TextColor}"/>-->
+
+                    <TextBlock Text="{Binding  WorkAssignmentEngine.Product_Name}"
+                               Background="Transparent"
+                               Height="33"
+                               FontSize="{StaticResource fontSizeData}"
+                               Margin="105,5,25,5"
+                               Foreground="{StaticResource TextColor}"
+                               VerticalAlignment="Bottom" />
+
+                </Grid>
+
+                <Grid Grid.Column="1"
+                  Height="50" 
+                  Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="GTIN:"
+                           Margin="10,0,0,0"
+                           FontSize="{StaticResource fontSizeData}"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <!--<controls:S7TextBox Address="DB1.DBD192-STR40" 
+                                      Background="Transparent"
+                                      Height="40"
+                                      FontSize="{StaticResource fontSizeData}"
+                                      Margin="62,5,28,5"
+                                      VerticalContentAlignment="Center"
+                                      MinAccesLevel="0"
+                                      Text=""
+                                      Foreground="{StaticResource TextColor}"/>-->
+
+                    <TextBlock Text="{Binding  WorkAssignmentEngine.GTIN}"
+                               Background="Transparent"
+                               Height="33"
+                               FontSize="{StaticResource fontSizeData}"
+                               Margin="62,5,28,5"
+                               Foreground="{StaticResource TextColor}"
+                               VerticalAlignment="Bottom" />
+
+
+                </Grid>
+
+                <Grid Grid.Column="2"
+                  Height="50" 
+                  Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="ПАРТИЯ:"
+                           Margin="10,0,0,0"
+                           FontSize="{StaticResource fontSizeData}"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <!--<controls:S7TextBox Address="DB1.DBD318-STR40" 
+                                        Background="Transparent"
+                                        MinAccesLevel="0"
+                                        Height="40"
+                                        FontSize="{StaticResource fontSizeData}"
+                                        Margin="94,5,16,5"
+                                        VerticalContentAlignment="Center"
+                                        Text="" 
+                                        Foreground="{StaticResource TextColor}"/>-->
+
+                    <TextBlock Text="{Binding  WorkAssignmentEngine.Lot_No}"
+                               Background="Transparent"
+                               Height="33"
+                               FontSize="{StaticResource fontSizeData}"
+                               Margin="94,5,16,5"
+                               Foreground="{StaticResource TextColor}"
+                               VerticalAlignment="Bottom" />
+
+
+                </Grid>
+
+                <Rectangle Fill="Transparent"
+                           Grid.ColumnSpan="3"/>
+
+            </Grid>
+
+            <!--ТАБЛИЦА СО СЧЕТЧИКАМИ ИЗДЕЛИЙ-->
+            <Grid VerticalAlignment="Top"
+              Margin="10,30,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!--ВЫПУЩЕНО КОРОБОВ-->
+                <Grid Height="50" 
+                  Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="ВЫПУЩЕНО КОРОБОВ:"
+                           FontFamily="{StaticResource fontFamilyData}"
+                           FontSize="{StaticResource fontSizeData}"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <!--<controls:S7TextBox Address="DB1.DBD20-DWORD"
+                                      Height="40"
+                                      FontSize="{StaticResource fontSizeData}"
+                                      VerticalContentAlignment="Center"
+                                      IsReadOnly="False"
+                                      Margin="280,0,10,0"
+                                      Text="0"/>-->
+
+                    <TextBox Height="40"
+                             FontSize="{StaticResource fontSizeData}"
+                             Background="{StaticResource DarkColor}"
+                             Foreground="{StaticResource TextColor}"
+                             BorderThickness="0"
+                             VerticalContentAlignment="Center"
+                             Text="{Binding Report.BoxCount, Mode=OneWay}"
+                             IsReadOnly="False"
+                             Margin="280,0,10,0"/>
+
+
+                </Grid>
+
+                <!--ВЫПУЩЕНО ПРОДУКТОВ-->
+                <Grid Grid.Row="1"
+                  Height="50" 
+                  Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="ВЫПУЩЕНО ПРОДУКТОВ:"
+                           FontFamily="{StaticResource fontFamilyData}"
+                           FontSize="{StaticResource fontSizeData}"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <!--<controls:S7TextBox Address="DB1.DBD16-DWORD"
+                                      Height="40"
+                                      FontSize="{StaticResource fontSizeData}"
+                                      VerticalContentAlignment="Center"
+                                      IsReadOnly="False"
+                                      Margin="280,0,10,0"
+                                      Text="0"/>-->
+
+                    <TextBox Height="40"
+                             FontSize="{StaticResource fontSizeData}"
+                             Background="{StaticResource DarkColor}"
+                             Foreground="{StaticResource TextColor}"
+                             BorderThickness="0"
+                             VerticalContentAlignment="Center"
+                             Text="{Binding Report.ProductCount, Mode=OneWay}"
+                             IsReadOnly="False"
+                             Margin="280,0,10,0"/>
+
+                </Grid>
+
+                <!--ОТБРАКОВАНО ВРУЧНУЮ-->
+                <Grid Grid.Column="2"
+                  Height="50" 
+                  Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="ОТБРАКОВАНО ВРУЧНУЮ:"
+                           FontFamily="Tahoma"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           FontSize="{StaticResource fontSizeData}"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <!--<controls:S7TextBox Address="DB1.DBD28-DWORD"
+                                      Height="40"
+                                      FontSize="{StaticResource fontSizeData}"
+                                      VerticalContentAlignment="Center"
+                                      IsReadOnly="False"
+                                      Margin="280,0,10,0"
+                                      Text="0"/>-->
+
+                    <TextBox Height="40"
+                             FontSize="{StaticResource fontSizeData}"
+                             Background="{StaticResource DarkColor}"
+                             Foreground="{StaticResource TextColor}"
+                             BorderThickness="0"
+                             VerticalContentAlignment="Center"
+                             Text="{Binding Report.DeffectCount, Mode=OneWay}"
+                             IsReadOnly="False"
+                             Margin="280,0,10,0"/>
+
+                </Grid>
+
+                <!--ПОВТОР КОДОВ-->
+                <Grid Grid.Row="1"
+                  Grid.Column="2"
+                  Height="50" 
+                  Background="{StaticResource LightColor}">
+                    <TextBlock  Text="ПОВТОР КОДОВ:"
+                            FontFamily="Tahoma"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource fontSizeData}"
+                            Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <!--<controls:S7TextBox Address="DB1.DBD36-DWORD"
+                                          Height="40"
+                                          FontSize="{StaticResource fontSizeData}"
+                                          VerticalContentAlignment="Center"
+                                          IsReadOnly="False"
+                                          Margin="280,0,10,0"
+                                          Text="0"/>-->
+
+                    <TextBox Height="40"
+                             FontSize="{StaticResource fontSizeData}"
+                             Background="{StaticResource DarkColor}"
+                             Foreground="{StaticResource TextColor}"
+                             BorderThickness="0"
+                             VerticalContentAlignment="Center"
+                             Text="{Binding Report.RepeatCount, Mode=OneWay}"
+                             IsReadOnly="False"
+                             Margin="280,0,10,0"/>
+
+                </Grid>
+
+                <!--БЛОКИРОВКА ДОСТУПА К КОНТРОЛАМ-->
+                <Rectangle Fill="Transparent"
+                           Grid.ColumnSpan="3"
+                           Grid.RowSpan="2"/>
+
+            </Grid>
+
+            <!--КНОПКИ-->
+            <Grid Height="200"
+              Margin="10,30,10,0"
+              Background="Transparent"
+              VerticalAlignment="Top">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Background="{StaticResource LightColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <!--КНОПКА Запуска ЛИНИИ-->
+                    <Button   Grid.Row="0"
+                                        Margin="20,5,20,5"
+                                        Style="{StaticResource btnStyle}"
+                                        Background="#FF6DC27A"
+                                        Foreground="{StaticResource IconColor}"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        IsEnabled="{Binding ButtonsEnableModel.BtnStartEnable}"
+                                        Command="{Binding Conveyor.StartLineCMD}" Click="Button_Click">
+                        <TextBlock  TextAlignment="Center"
+                                                    FontSize="{StaticResource fontSizeButtons}">
+                                                    <Run>СТАРТ</Run>
+                        </TextBlock>
+                    </Button>
+
+                    <!--СТАТУСЫ-->
+                    <Grid Grid.Row="1"
+                          Margin="20,0,0,0"
+                          Background="{StaticResource LightColor}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center">
+
+                        <Grid HorizontalAlignment="Left"
+                              Margin="20,0,0,0">
+                            <ContentPresenter Content="{converters:SwitchBinding Scaner.IsAvailable, {StaticResource IconOk}, {StaticResource IconError}}"/>
+                        </Grid>
+
+                        <TextBlock Text="СКАНЕР"
+                                   Margin="75,0,0,0"
+                                   VerticalAlignment="Center"
+                                   FontSize="{StaticResource fontSizeData}"
+                                   FontFamily="{StaticResource fontFamilyData}"
+                                   Foreground="{StaticResource TextColor}"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1"
+                          Margin="230,0,0,0"
+                          Background="{StaticResource LightColor}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center">
+
+                        <Grid HorizontalAlignment="Left"
+                              Margin="20,0,0,0">
+
+                            <controls:S7Indicator S7Operand="DB1.DBX134.0"
+                                                  IconTrue="{StaticResource IconOk}"
+                                                  IconFalse="{StaticResource IconError}"/>
+                        </Grid>
+
+                        <TextBlock Text="ПОВТОРЫ КОДОВ"
+                                   Margin="75,0,0,0"
+                                   VerticalAlignment="Center"
+                                   FontSize="{StaticResource fontSizeData}"
+                                   FontFamily="{StaticResource fontFamilyData}"
+                                   Foreground="{StaticResource TextColor}"/>
+                        
+                       
+
+                    </Grid>
+
+                    <!--КНОПКА ОСТАНОВА ЛИНИИ-->
+                    <Button   Grid.Row="2"
+                                        Margin="20,5,20,5"
+                                        Style="{StaticResource btnStyle}"
+                                        Background="#FFDB4969"
+                                        Foreground="{StaticResource IconColor}"
+                                        BorderThickness="0"
+                                        BorderBrush="Transparent"
+                                        IsEnabled="{Binding ButtonsEnableModel.BtnStopEnable}"
+                                        Command="{Binding Conveyor.StopLineCMD}">
+                        <TextBlock  TextAlignment="Center"
+                                                    FontSize="{StaticResource fontSizeButtons}">
+                                                    <Run>СТОП</Run>
+                        </TextBlock>
+                    </Button>
+
+
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <!--ItemsSource="{Binding ResultOperation.AllCodes}"-->
+                    <ListView x:Name="listView"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                              Background="{StaticResource LightColor}"
+                              ItemsSource="{Binding Report.AllCodes}"
+                              BorderBrush="{StaticResource GridColor}">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="29"
+                                      Width="{Binding ElementName=listView, Path=ActualWidth}">
+                                    <TextBlock Text="{Binding}" 
+                                               FontSize="{StaticResource fontSizeData}"
+                                               Foreground="{StaticResource TextColor}"/>
+
+                                    <Rectangle Height="1"
+                                               VerticalAlignment="Bottom"
+                                               Fill="{StaticResource GridColor}"/>
+
+                                </Grid>
+
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <!--<ListView.Items>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                            <sys:String>dffdfdf</sys:String>
+                        </ListView.Items>-->
+                    </ListView>
+    
+                    <!--Элемент, закрывающий доступ пользователя
+                    к списку-->
+                    <Rectangle Fill="Transparent"/>
+                </Grid>
+
+
+
+            </Grid>
+
+
+
+        </StackPanel>
+
+
+
+        <!--ТАБЛИЦА СИМУЛЯЦИЯ-->
+        <Grid Background="#FF1E1E1E" 
+              Visibility="Hidden"
+              Width="380"
+              Height="130"
+              Margin="0,0,0,80"
+              VerticalAlignment="Bottom"
+              HorizontalAlignment="Right">
+
+            <Rectangle VerticalAlignment="Top"
+                       HorizontalAlignment="Right"
+                       Opacity="0"
+                       Width="200"
+                       Height="20"
+                       Fill="#FF262626"/>
+
+            <TextBlock Text="CИМУЛЯЦИЯ:"
+                       FontFamily="Tahoma"
+                       FontWeight="Bold"
+                       Margin="20,-3,10,18"
+                       Foreground="{StaticResource TextColor}"/>
+
+            <StackPanel Margin="10"
+                        VerticalAlignment="Bottom"
+                        Orientation="Vertical">
+                <Grid Height="30" Background="{StaticResource LightColor}">
+
+                    <TextBlock Text="ПРОДУКТ:"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <controls:S7TextBox Address="DB1.DBD248-STR40" 
+                                          Width="250"
+                                          IsReadOnly="False"
+                                          Text="Моцарелла 300 гр."/>
+
+                </Grid>
+
+                <Grid Height="30" Background="{StaticResource LightColor}">
+                    <TextBlock Text="GTIN:"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <controls:S7TextBox Address="DB1.DBD416-STR14" 
+                                          Width="250"
+                                          IsReadOnly="False"
+                                          Text="04604567890126"/>
+
+                </Grid>
+
+                <Grid Height="30" Background="{StaticResource LightColor}">
+                    <TextBlock Text="ШТРИХКОД:"
+                           Margin="10,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource TextColor}"/>
+
+                    <Rectangle Fill="{StaticResource GridColor}"
+                           Height="1"
+                           VerticalAlignment="Bottom"/>
+
+                    <controls:S7TextBox Address="DB1.DBD432-STR40" 
+                                          Width="250"
+                                          IsReadOnly="False"
+                                          Text="Series 2"/>
+
+                </Grid>
+
+            </StackPanel>
+
+        </Grid>
+
+
+        <!--НИЖНЯЯ СТРОКА-->
+        <Grid Height="60"
+              VerticalAlignment="Bottom"
+              Background="#FF323232"
+              DataContext="{Binding ScreenEngine}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="150"/>
+                    <Setter Property="Margin" Value="0,0,0,2"/>
+                    <Setter Property="Background" Value="{StaticResource DarkColor}"/>
+                    <Setter Property="Foreground" Value="{StaticResource IconColor}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource GridColor}"/>
+                </Style>
+            </Grid.Resources>
+
+            <Button Grid.Column="0"
+                    Content="БРАК"
+                    IsEnabled="{Binding ButtonsEnableModel.BtnToolsEnable}"
+                    Style="{StaticResource btnStyle}"
+                    Background="{StaticResource DarkColor}"
+                    Foreground="{StaticResource TextColor}"
+                    FontFamily="{StaticResource fontFamilyButtons}"
+                    FontSize="{StaticResource fontSizeButtons}"
+                    Command="{Binding AddingDeffectCMD}"/>
+
+            <Button Grid.Column="1" 
+                    Content="СПРАВКА" 
+                    IsEnabled="{Binding ButtonsEnableModel.BtnToolsEnable}"
+                    Style="{StaticResource btnStyle}"
+                    Background="{StaticResource DarkColor}"
+                    Foreground="{StaticResource TextColor}"
+                    Command="{Binding OpenInformationCMD}"
+                    FontFamily="{StaticResource fontFamilyButtons}"
+                    FontSize="{StaticResource fontSizeButtons}"/>
+
+            <Button Grid.Column="2"
+                     Content="ДОБАВИТЬ" 
+                     IsEnabled="{Binding ButtonsEnableModel.BtnToolsEnable}"
+                     Style="{StaticResource btnStyle}"
+                     Background="{StaticResource DarkColor}"
+                     Foreground="{StaticResource TextColor}"
+                     FontFamily="{StaticResource fontFamilyButtons}"
+                     FontSize="{StaticResource fontSizeButtons}"
+                    Command="{Binding AddingBoxCMD}"/>
+
+
+        </Grid>
+
+    </Grid>
+</UserControl>

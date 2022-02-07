@@ -1,0 +1,29 @@
+﻿<Window x:Class="SortingStantion.frameUSPFault.frameUSPFault"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SortingStantion.Controls"
+        mc:Ignorable="d"
+        Width="500"
+        Height="300"
+        Style="{StaticResource WindowNotExitStyle}" 
+        WindowStartupLocation="CenterOwner" 
+        Title="Ошибка ИБП">
+    <Border>
+
+        <Grid>
+
+            <!--СООБЩЕНИЕ-->
+            <TextBlock x:Name="txMessage"
+                       Text="Потеря питания! Комплекс будет отключен через 60 секунд"
+                       Foreground="{StaticResource TextColor}"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextWrapping="Wrap"
+                       FontSize="26"
+                       Margin="10,0,10,0"/>
+
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,19 @@
+﻿<Application x:Class="SortingStantion.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SortingStantion"
+             StartupUri="MainScreen.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionarys/Brushes.xaml"/>
+                <ResourceDictionary Source="Dictionarys/Fonts.xaml"/>
+                <ResourceDictionary Source="Dictionarys/Icons.xaml"/>
+                <ResourceDictionary Source="Dictionarys/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="Dictionarys/rButtonStyles.xaml"/>
+                <ResourceDictionary Source="Dictionarys/WindowStyles.xaml"/>
+                <ResourceDictionary Source="Dictionarys/ComboBoxStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

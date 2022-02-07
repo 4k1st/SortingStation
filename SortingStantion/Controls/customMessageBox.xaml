@@ -1,0 +1,52 @@
+﻿<Window x:Class="SortingStantion.Controls.customMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SortingStantion.Controls"
+        mc:Ignorable="d"
+        Title="customMessageBox"  Width="700"
+        Height="300"
+        AllowsTransparency="True" 
+        Style="{StaticResource VS2012WindowStyle}"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF323232">
+    
+    <Border BorderBrush="#FF1E1E1E"
+            BorderThickness="2" 
+            Background="#FF1E1E1E">
+
+        <Grid>
+           
+            <!--СООБЩЕНИЕ-->
+            <Grid Grid.Row="1"
+                  Background="{StaticResource DarkColor}" >
+
+                <TextBlock Text="{Binding Message}"
+                       Foreground="{StaticResource TextColor}"
+                       TextAlignment="Center"
+                       VerticalAlignment="Top"
+                       TextWrapping="Wrap"
+                       FontSize="26"
+                       Margin="10,20,10,0"/>
+
+                <Button Content="Закрыть"
+                         Height="50"
+                        Width="300"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,10,10"
+                        Style="{StaticResource btnStyle}"
+                        Background="{StaticResource LightColor}"
+                        Foreground="{StaticResource TextColor}"
+                        FontSize="{StaticResource fontSizeData}" 
+                        Click="Button_Click"/>
+
+            </Grid>
+
+            
+        </Grid>
+    </Border>
+    
+  
+</Window>

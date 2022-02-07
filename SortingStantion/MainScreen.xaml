@@ -1,0 +1,38 @@
+﻿<Window x:Class="SortingStantion.MainScreen.MainScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SortingStantion.MainScreen"
+        xmlns:convert="clr-namespace:SortingStantion.Converters"
+        xmlns:controls="clr-namespace:SortingStantion.Controls"
+        mc:Ignorable="d"
+        Title="Комплекс сериализации S1" Height="768" Width="1024"
+        Background="{StaticResource LightColor}"
+        WindowStyle="None"
+        AllowsTransparency="True">
+
+    <Window.Resources>
+        <convert:ObjToBoolConverter x:Key="obc"/>
+        <convert:InverseObjToBoolConverter x:Key="iobc"/>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+
+        <!--<Viewbox>-->
+            <!--ГЛАВНЫЙ ЭКРАН-->
+        <Viewbox>
+            <Grid Background="#FF262626"
+               Height="768" Width="1024">
+                <ContentControl Content="{Binding ScreenEngine.CurrentScreen}"/>
+            </Grid>
+        </Viewbox>
+      
+        <!--</Viewbox>-->
+    </Grid>
+
+</Window>

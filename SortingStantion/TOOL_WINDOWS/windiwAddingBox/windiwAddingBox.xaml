@@ -1,0 +1,68 @@
+﻿<Window x:Class="SortingStantion.windiwAddingBox.windiwAddingBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SortingStantion.windiwAddingBox"
+        mc:Ignorable="d"
+        Style="{StaticResource WindowNotExitStyle}"
+        ResizeMode="NoResize"
+        Background="#FF323232"
+        WindowStartupLocation="CenterOwner"
+        Title="Ручное добавление продукта." Width="640" Height="200">
+    <Grid >
+
+        <Grid Height="50"
+              Margin="20,30,20,0"
+              VerticalAlignment="Top">
+
+            <TextBlock Text="Считайте ручным сканером код добавляемого продукта."
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"
+                       Foreground="{StaticResource TextColor}"
+                       FontSize="{StaticResource fontSizeData}"/>
+            
+
+        </Grid>
+
+        <!--<Grid Height="50"
+              Margin="10,110,20,0"
+              VerticalAlignment="Top">
+
+            <TextBlock Text="       СЧИТАНО:"
+                   HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                   Foreground="{StaticResource TextColor}"
+                   FontSize="{StaticResource fontSizeData}"
+                   TextAlignment="Center"/>
+
+            <TextBox Text="GTIN:04601234567895       SN:F8h3W"
+                 Height="30"
+                     Margin="150,0,20,0"
+                 FontSize="{StaticResource fontSizeData}"
+                 Foreground="{StaticResource TextColor}"
+                 Background="{StaticResource DarkColor}"
+                 BorderThickness="0"
+                 VerticalAlignment="Center"/>
+
+            <Rectangle Fill="Transparent"/>
+
+        </Grid>-->
+
+        <!--КНОПКА - Закрыть-->
+        <Button Height="50"
+                Width="300"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,10,10"
+                Style="{StaticResource btnStyle}"
+                Background="{StaticResource LightColor}"
+                Foreground="{StaticResource TextColor}"
+                FontSize="{StaticResource fontSizeData}"
+                Content="Закрыть" Click="btnCloseClick"
+            />
+
+
+
+    </Grid>
+</Window>

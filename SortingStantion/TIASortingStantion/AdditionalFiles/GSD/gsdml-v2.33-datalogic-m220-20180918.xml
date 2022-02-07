@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--******************************************************************************************* -->
+<!--******************************************************************************************* -->
+<!--******************************************************************************************* -->
+<!--******************************************************************************************* -->
+<!-- Edited with MS Visual Studio 2017 - Copyright Datalogic s.r.l                              -->
+<!-- Author F.D. - R&D - SW                                                                     -->
+<!--                                                                                            -->
+<!-- Versions:                                                                                  -->
+<!-- v1.0 - 20160628 First Release for M120                                                     -->
+<!--        Removed IRT DAP                                                                     -->
+<!--        Customized strings and values                                                       -->
+<!--        Removed modules + default slot set (drive, encoder, pump, IO, bit)                  -->
+<!--        Removed modules + default slot set (drive, encoder, pump, IO, bit)                  -->
+<!-- v1.1 - 20161024 First Release for M120                                                     -->
+<!--        Removed some I/O modules                                                            -->
+<!--        New default Min Update Time                                                         -->
+<!-- v1.2 - 20170612 Compatibility with S7 v.5.5 SP4                                            -->
+<!--        Removed SystemRedundancy info                                                       -->
+<!-- v2.0 - 20170929 Certification v.2.33 purposes                                              -->
+<!--        IO_SupervisorSupported modified from "true" to "false"                              -->
+<!--        NumberOfAR modified from "2" to "1"                                                 -->
+<!--        MediaRedundancy SupportedRole="Client" deleted                                      -->
+<!--        PortSubmoduleItem IsDefaultRingport="true" deleted                                  -->
+<!--        CheckMAUTypeSupported modified from "true" to "false"                               -->
+<!--        CheckMAUTypeDifferenceSupported modified from "true" to "false"                     -->
+<!--        SharedDeviceSupported modified from "true" to "false"                               -->
+<!--        SharedInputSupported modified from "true" to "false"                                -->
+<!--        PowerOnToCommReady modified from "5000" to "20000"                                  -->
+<!--        VendorName Value modified to "Datalogic"                                     -->
+<!-- v3.0 - 20171204 Modifications Certification advice)                                        -->
+<!--        Upgrade GSDML version from 2.32 to 2.33                                             -->
+<!--           it implies deletion IOPS_Length and IOCS_Length                                  -->
+<!--           it implies deletion declaration about API 0 support (is default)                 -->
+<!--           it implies deletion declaration about SupportedMibs                              -->
+<!--           it implies deletion declaration about CertificationInfo/ProfileList              -->
+<!--        MAUTypeItem Values 10,11,15 deleted                                                 -->
+<!--        DCP_hello and PowerOnToCommReady deleted (Fast Start Up)                            -->
+<!--        CheckMAUTypeSupported modified from "false" to "true"                               -->
+<!--        CheckMAUTypeDifferenceSupported modified from "false" to "true"                     -->
+<!--******************************************************************************************* -->
+<!--******************************************************************************************* -->
+<!--******************************************************************************************* -->
+<!--******************************************************************************************* -->
+
+<ISO15745Profile xmlns="http://www.profibus.com/GSDML/2003/11/DeviceProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.profibus.com/GSDML/2003/11/DeviceProfile ..\xsd\GSDML-DeviceProfile-V2.33.xsd">
+  <ProfileHeader>
+    <ProfileIdentification>PROFINET Device Profile</ProfileIdentification>
+    <ProfileRevision>1.00</ProfileRevision>
+    <ProfileName>Device Profile for PROFINET Devices</ProfileName>
+    <ProfileSource>PROFIBUS Nutzerorganisation e. V. (PNO)</ProfileSource>
+    <ProfileClassID>Device</ProfileClassID>
+    <ISO15745Reference>
+      <ISO15745Part>4</ISO15745Part>
+      <ISO15745Edition>1</ISO15745Edition>
+      <ProfileTechnology>GSDML</ProfileTechnology>
+    </ISO15745Reference>
+  </ProfileHeader>
+  <ProfileBody>
+    <DeviceIdentity VendorID="0x019C" DeviceID="0x0101">
+      <InfoText TextId="IDT_FAMILY_DESCRIPTION"/>
+      <VendorName Value="Datalogic s.r.l."/>
+    </DeviceIdentity>
+    <DeviceFunction>
+      <Family MainFamily="Sensors" ProductFamily="Matrix 220"/>
+    </DeviceFunction>
+    <ApplicationProcess>
+      <DeviceAccessPointList>
+        <!-- M120 UNIQUE DAP -->
+        <DeviceAccessPointItem ID="ID_DAP_RTEM_RT" PhysicalSlots="0..64" PNIO_Version="V2.33" IO_SupervisorSupported="false" 
+                               ModuleIdentNumber="0x00000100" MinDeviceInterval="2048" ImplementationType="Atmel" DNS_CompatibleName="M220" 
+                               MultipleWriteSupported="true" MaxSupportedRecordSize="8000" FixedInSlots="0" ObjectUUID_LocalIndex="1" 
+                               RequiredSchemaVersion="V2.3" CheckDeviceID_Allowed="true" RemoteApplicationTimeout="300" 
+		      NameOfStationNotTransferable="true" SharedDeviceSupported="false" SharedInputSupported="false" 
+		      DeviceAccessSupported="true" NumberOfDeviceAccessAR="1" PrmBeginPrmEndSequenceSupported="true" LLDP_NoD_Supported="true" 
+		      WebServer="http:///" ResetToFactoryModes="1 2 3 4 8">          
+          <ModuleInfo>
+            <Name TextId="IDT_DAP_RT_NAME"/>
+            <InfoText TextId="IDT_DAP_RT_INFO"/>
+            <VendorName Value="Datalogic s.r.l."/>
+            <OrderNumber Value="M220"/>
+            <HardwareRelease Value="1"/>
+            <SoftwareRelease Value="V1.37.0"/>
+          </ModuleInfo>
+          <CertificationInfo ConformanceClass="A" ApplicationClass="" NetloadClass="I"/>
+          <SubslotList>
+            <SubslotItem SubslotNumber="32768" TextId="IDT_INTERFACE"/>
+            <SubslotItem SubslotNumber="32769" TextId="IDT_PORT1"/>
+          </SubslotList>
+          <IOConfigData MaxInputLength="1024" MaxOutputLength="1024" MaxDataLength="1024"/>
+          <UseableModules>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VI128" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VI64" AllowedInSlots="1..64" UsedInSlots="2"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VI32" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VI16" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VI8" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VO128" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VO64" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VO32" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VO16" AllowedInSlots="1..64"/>
+            <ModuleItemRef ModuleItemTarget="IDM_MODULE_VO8" AllowedInSlots="1..64" UsedInSlots="1"/>
+          </UseableModules>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="ID2" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" Writeable_IM_Records="1 2 3" MayIssueProcessAlarm="false">
+              <IOData/>
+              <ModuleInfo>
+                <Name TextId="IDT_DAP_RT_NAME"/>
+                <InfoText TextId="IDT_DAP_RT_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+          <SystemDefinedSubmoduleList>
+              <InterfaceSubmoduleItem ID="ID2_INT1" TextId="IDT_DAP_RT_INTERFACE" SubmoduleIdentNumber="0x00000001" SubslotNumber="32768" SupportedRT_Classes="RT_CLASS_1" SupportedProtocols="SNMP;LLDP" NetworkComponentDiagnosisSupported="true" PTP_BoundarySupported="true" DCP_BoundarySupported="true" MulticastBoundarySupported="false" DelayMeasurementSupported="false" DCP_HelloSupported="false">
+                  <ApplicationRelations StartupMode="Legacy;Advanced" NumberOfAR="1">
+                <TimingProperties SendClock="32" ReductionRatio="1 2 4 8 16 32 64 128 256 512"/>
+              </ApplicationRelations>
+              <MediaRedundancy MRPD_Supported="false" AdditionalProtocolsSupported="false"/>
+            </InterfaceSubmoduleItem>
+            <PortSubmoduleItem ID="ID2_P1" SubmoduleIdentNumber="0x00000002" TextId="IDT_PORT1_DESC" SubslotNumber="32769" MAUTypes="16" PortDeactivationSupported="true" LinkStateDiagnosisCapability="Up+Down" CheckMAUTypeSupported="true" CheckMAUTypeDifferenceSupported="true">
+              <MAUTypeList>
+                <MAUTypeItem Value="16" AdjustSupported="true"/>
+              </MAUTypeList>
+            </PortSubmoduleItem>
+          </SystemDefinedSubmoduleList>
+          <Graphics>
+            <GraphicItemRef Type="DeviceSymbol" GraphicItemTarget="1"/>
+          </Graphics>
+        </DeviceAccessPointItem>
+        
+      </DeviceAccessPointList>
+      <ModuleList>
+        <!--virtual intput modules-->
+        <ModuleItem ID="IDM_MODULE_VI128" ModuleIdentNumber="0x00000504">
+          <ModuleInfo CategoryRef="IDC_MODULE_I">
+            <Name TextId="IDT_MODULE_VI128_NAME"/>
+            <InfoText TextId="IDT_MODULE_VI128_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VI128" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" MayIssueProcessAlarm="false">
+              <IOData>
+                <Input Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_INPUT" Length="128"/>
+                </Input>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x80,0x00,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_I">
+                <Name TextId="IDT_MODULE_VI128_NAME"/>
+                <InfoText TextId="IDT_MODULE_VI128_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VI64" ModuleIdentNumber="0x00000505">
+          <ModuleInfo CategoryRef="IDC_MODULE_I">
+            <Name TextId="IDT_MODULE_VI64_NAME"/>
+            <InfoText TextId="IDT_MODULE_VI64_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VI64" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" MayIssueProcessAlarm="false">
+              <IOData>
+                <Input Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_INPUT" Length="64"/>
+                </Input>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x40,0x00,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_I">
+                <Name TextId="IDT_MODULE_VI64_NAME"/>
+                <InfoText TextId="IDT_MODULE_VI64_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VI32" ModuleIdentNumber="0x00000507">
+          <ModuleInfo CategoryRef="IDC_MODULE_I">
+            <Name TextId="IDT_MODULE_VI32_NAME"/>
+            <InfoText TextId="IDT_MODULE_VI32_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VI32" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" MayIssueProcessAlarm="false">
+              <IOData>
+                <Input Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_INPUT" Length="32"/>
+                </Input>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x20,0x00,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_I">
+                <Name TextId="IDT_MODULE_VI32_NAME"/>
+                <InfoText TextId="IDT_MODULE_VI32_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VI16" ModuleIdentNumber="0x00000508">
+          <ModuleInfo CategoryRef="IDC_MODULE_I">
+            <Name TextId="IDT_MODULE_VI16_NAME"/>
+            <InfoText TextId="IDT_MODULE_VI16_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VI16" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" MayIssueProcessAlarm="false">
+              <IOData>
+                <Input Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_INPUT" Length="16"/>
+                </Input>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x10,0x00,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_I">
+                <Name TextId="IDT_MODULE_VI16_NAME"/>
+                <InfoText TextId="IDT_MODULE_VI16_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VI8" ModuleIdentNumber="0x00000506">
+          <ModuleInfo CategoryRef="IDC_MODULE_I">
+            <Name TextId="IDT_MODULE_VI8_NAME"/>
+            <InfoText TextId="IDT_MODULE_VI8_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VI8" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" MayIssueProcessAlarm="false">
+              <IOData>
+                <Input Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_INPUT" Length="8"/>
+                </Input>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x08,0x00,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_I">
+                <Name TextId="IDT_MODULE_VI8_NAME"/>
+                <InfoText TextId="IDT_MODULE_VI8_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <!--virtual output modules-->
+        <ModuleItem ID="IDM_MODULE_VO128" ModuleIdentNumber="0x00000604">
+          <ModuleInfo CategoryRef="IDC_MODULE_O">
+            <Name TextId="IDT_MODULE_VO128_NAME"/>
+            <InfoText TextId="IDT_MODULE_VO128_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VO128" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" SupportedSubstitutionModes="0 1 2" MayIssueProcessAlarm="false">
+              <IOData>
+                <Output Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_OUTPUT" Length="128"/>
+                </Output>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x00,0x80,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_O">
+                <Name TextId="IDT_MODULE_VO128_NAME"/>
+                <InfoText TextId="IDT_MODULE_VO128_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VO64" ModuleIdentNumber="0x00000605">
+          <ModuleInfo CategoryRef="IDC_MODULE_O">
+            <Name TextId="IDT_MODULE_VO64_NAME"/>
+            <InfoText TextId="IDT_MODULE_VO64_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VO64" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" SupportedSubstitutionModes="0 1 2" MayIssueProcessAlarm="false">
+              <IOData>
+                <Output Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_OUTPUT" Length="64"/>
+                </Output>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x00,0x40,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_O">
+                <Name TextId="IDT_MODULE_VO64_NAME"/>
+                <InfoText TextId="IDT_MODULE_VO64_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VO32" ModuleIdentNumber="0x00000607">
+          <ModuleInfo CategoryRef="IDC_MODULE_O">
+            <Name TextId="IDT_MODULE_VO32_NAME"/>
+            <InfoText TextId="IDT_MODULE_VO32_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VO32" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" SupportedSubstitutionModes="0 1 2" MayIssueProcessAlarm="false">
+              <IOData>
+                <Output Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_OUTPUT" Length="32"/>
+                </Output>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x00,0x20,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_O">
+                <Name TextId="IDT_MODULE_VO32_NAME"/>
+                <InfoText TextId="IDT_MODULE_VO32_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VO16" ModuleIdentNumber="0x00000608">
+          <ModuleInfo CategoryRef="IDC_MODULE_O">
+            <Name TextId="IDT_MODULE_VO16_NAME"/>
+            <InfoText TextId="IDT_MODULE_VO16_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VO16" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" SupportedSubstitutionModes="0 1 2" MayIssueProcessAlarm="false">
+              <IOData>
+                <Output Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_OUTPUT" Length="16"/>
+                </Output>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x00,0x10,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_O">
+                <Name TextId="IDT_MODULE_VO16_NAME"/>
+                <InfoText TextId="IDT_MODULE_VO16_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        <ModuleItem ID="IDM_MODULE_VO8" ModuleIdentNumber="0x00000606">
+          <ModuleInfo CategoryRef="IDC_MODULE_O">
+            <Name TextId="IDT_MODULE_VO8_NAME"/>
+            <InfoText TextId="IDT_MODULE_VO8_INFO"/>
+          </ModuleInfo>
+          <VirtualSubmoduleList>
+            <VirtualSubmoduleItem ID="IDS_SUBMODULE_VO8" SubmoduleIdentNumber="0x00000000" FixedInSubslots="1" PROFIsafeSupported="false" SupportedSubstitutionModes="0 1 2" MayIssueProcessAlarm="false">
+              <IOData>
+                <Output Consistency="All items consistency">
+                  <DataItem DataType="OctetString" TextId="IDT_MODULE_DATA_OUTPUT" Length="8"/>
+                </Output>
+              </IOData>
+              <RecordDataList>
+                <ParameterRecordDataItem Index="1" Length="4" TransferSequence="1">
+                  <Name TextId="IDT_MODULE_PARA_GROUP"/>
+                  <Const Data="0x00,0x08,0x00,0x00"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="0" DefaultValue="0" TextId="IDT_MODULE_PARA_PROCESS_DATA"/>
+                  <Ref ValueItemTarget="IDV_BOOL" ByteOffset="2" DataType="Bit" BitOffset="1" DefaultValue="0" TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR"/>
+                </ParameterRecordDataItem>
+              </RecordDataList>
+              <ModuleInfo CategoryRef="IDC_MODULE_O">
+                <Name TextId="IDT_MODULE_VO8_NAME"/>
+                <InfoText TextId="IDT_MODULE_VO8_INFO"/>
+              </ModuleInfo>
+            </VirtualSubmoduleItem>
+          </VirtualSubmoduleList>
+        </ModuleItem>
+        
+      </ModuleList>
+      <!--Value items -->
+      <ValueList>
+        <ValueItem ID="IDV_BOOL">
+          <Assignments>
+            <Assign Content="0" TextId="IDT_VAL_DISABLE"/>
+            <Assign Content="1" TextId="IDT_VAL_ENABLE"/>
+          </Assignments>
+        </ValueItem>
+      </ValueList>
+      <!--Diagnosis items-->
+      <ChannelDiagList>
+        <ChannelDiagItem ErrorType="256">
+          <Name TextId="IDT_DIAG_CHANNEL_TEST1"/>
+          <Help TextId="IDT_DIAG_CHANNEL_TEST1_HELP"/>
+        </ChannelDiagItem>
+        <ChannelDiagItem ErrorType="257">
+          <Name TextId="IDT_DIAG_CHANNEL_TEST2"/>
+          <Help TextId="IDT_DIAG_CHANNEL_TEST2_HELP"/>
+        </ChannelDiagItem>
+      </ChannelDiagList>
+      <GraphicsList>
+        <GraphicItem ID="1" GraphicFile="GSDML-019C-0101-Datalogic-M220"/>
+      </GraphicsList>
+      <CategoryList>
+        <CategoryItem ID="IDC_MODULE_I" TextId="IDT_MODULE_CAT_I"/>
+        <CategoryItem ID="IDC_MODULE_O" TextId="IDT_MODULE_CAT_O"/>
+      </CategoryList>
+      <ExternalTextList>
+        <PrimaryLanguage>
+          <!--Common strings-->
+          <Text TextId="IDT_FAMILY_DESCRIPTION" Value="Datalogic s.r.l. GSDML file for MATRIX 220 PROFINET-IO DEVICE 1Port"/>
+          <!--DAP strings-->
+          <Text TextId="IDT_DAP_RT_NAME" Value="Matrix 220"/>
+          <Text TextId="IDT_DAP_RT_INFO" Value="This Device Access Point supports RT communication; supports Conformance Class A"/>
+          <Text TextId="IDT_DAP_RT_INTERFACE" Value="1 Port PN-RT"/>
+          <Text TextId="IDT_INTERFACE" Value="X1"/>
+          <Text TextId="IDT_PORT1" Value="X1 P1"/>
+          <Text TextId="IDT_PORT1_DESC" Value="Port 1"/>
+          <!--Value strings-->
+          <Text TextId="IDT_VAL_ENABLE" Value="Enabled"/>
+          <Text TextId="IDT_VAL_DISABLE" Value="Disabled"/>
+          <!--Diagnosis strings-->
+          <Text TextId="IDT_DIAG_CHANNEL_TEST1" Value="Test Channel Diagnosis 1"/>
+          <Text TextId="IDT_DIAG_CHANNEL_TEST1_HELP" Value="Test Channel Diagnosis 1 help text"/>
+          <Text TextId="IDT_DIAG_CHANNEL_TEST2" Value="Test Channel Diagnosis 2"/>
+          <Text TextId="IDT_DIAG_CHANNEL_TEST2_HELP" Value="Test Channel Diagnosis 2 help text"/>
+          <!--Module strings-->
+          <!--categories-->
+          <Text TextId="IDT_MODULE_CAT_I" Value="Input Modules"/>
+          <Text TextId="IDT_MODULE_CAT_O" Value="Output Modules"/>
+          <!--common strings-->
+          <Text TextId="IDT_MODULE_DATA_OUTPUT" Value="Outputs"/>
+          <Text TextId="IDT_MODULE_DATA_INPUT" Value="Inputs"/>
+          <Text TextId="IDT_MODULE_PARA_GROUP" Value="Common sample parameter"/>
+          <Text TextId="IDT_MODULE_PARA_PROCESS_DATA" Value="Prevent processing of cyclic data"/>
+          <Text TextId="IDT_MODULE_PARA_SIM_ACYCLIC_ERROR" Value="Simulation of acyclic errors"/>
+          <!--Virtual input-->
+          <Text TextId="IDT_MODULE_VI128_NAME" Value="Virtual 128 Byte Input"/>
+          <Text TextId="IDT_MODULE_VI128_INFO" Value="Virtual input module, 64 byte data"/>
+          <Text TextId="IDT_MODULE_VI64_NAME" Value="Virtual 64 Byte Input"/>
+          <Text TextId="IDT_MODULE_VI64_INFO" Value="Virtual input module, 64 byte data"/>
+          <Text TextId="IDT_MODULE_VI32_NAME" Value="Virtual 32 Byte Input"/>
+          <Text TextId="IDT_MODULE_VI32_INFO" Value="Virtual input module, 32 byte data"/>
+          <Text TextId="IDT_MODULE_VI16_NAME" Value="Virtual 16 Byte Input"/>
+          <Text TextId="IDT_MODULE_VI16_INFO" Value="Virtual input module, 16 byte data"/>
+          <Text TextId="IDT_MODULE_VI8_NAME" Value="Virtual 8 Byte Input"/>
+          <Text TextId="IDT_MODULE_VI8_INFO" Value="Virtual input module, 8 byte data"/>
+          <!--Virtual output-->
+          <Text TextId="IDT_MODULE_VO128_NAME" Value="Virtual 128 Byte Output"/>
+          <Text TextId="IDT_MODULE_VO128_INFO" Value="Virtual output module, 128 byte data"/>
+          <Text TextId="IDT_MODULE_VO64_NAME" Value="Virtual 64 Byte Output"/>
+          <Text TextId="IDT_MODULE_VO64_INFO" Value="Virtual output module, 64 byte data"/>
+          <Text TextId="IDT_MODULE_VO32_NAME" Value="Virtual 32 Byte Output"/>
+          <Text TextId="IDT_MODULE_VO32_INFO" Value="Virtual output module, 32 byte data"/>
+          <Text TextId="IDT_MODULE_VO16_NAME" Value="Virtual 16 Byte Output"/>
+          <Text TextId="IDT_MODULE_VO16_INFO" Value="Virtual output module, 16 byte data"/>
+          <Text TextId="IDT_MODULE_VO8_NAME" Value="Virtual 8 Byte Output"/>
+          <Text TextId="IDT_MODULE_VO8_INFO" Value="Virtual output module, 8 byte data"/>
+        </PrimaryLanguage>
+      </ExternalTextList>
+    </ApplicationProcess>
+  </ProfileBody>
+</ISO15745Profile>

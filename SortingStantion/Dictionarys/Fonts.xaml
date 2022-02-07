@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:local="clr-namespace:SortingStantion.Dictionarys">
+
+    <!--ШРИФТЫ-->
+    <FontFamily x:Key="fontFamilyHeader">Fonts/#Tahoma</FontFamily>
+    <sys:Double x:Key ="fontSizeHeader">16</sys:Double>
+
+    <FontFamily x:Key="fontFamilyData">Fonts/#Tahoma</FontFamily>
+    <sys:Double x:Key ="fontSizeData">20</sys:Double>
+    <sys:Double x:Key ="fontSizeDataLitle">12.5</sys:Double>
+
+
+    <FontFamily x:Key="fontFamilyButtons">Fonts/#Tahoma</FontFamily>
+    <sys:Double x:Key ="fontSizeButtons">20</sys:Double>
+
+    <FontFamily x:Key="fontFieldIO">Fonts/#Tahoma</FontFamily>
+    <sys:Double x:Key ="fontSizeFieldIO">24</sys:Double>
+    <sys:Double x:Key ="fontSizeFieldIOLittle">16</sys:Double>
+
+</ResourceDictionary>

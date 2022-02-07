@@ -1,0 +1,59 @@
+﻿<Window x:Class="SortingStantion.ToolsWindows.windowProductsAreTooCloseToEachOther.windowProductsAreTooCloseToEachOther"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SortingStantion.ToolsWindows.windowProductsAreTooCloseToEachOther"
+            AllowsTransparency="True" 
+        Style="{StaticResource WindowNotExitStyle}"
+        WindowStartupLocation="CenterOwner" 
+        Width="700" Height="350"
+        Title="Ошибка. Близкий продукт"
+        Background="#FF323232">
+    <Border BorderBrush="#FF1E1E1E"
+            BorderThickness="2" 
+            Background="#FF1E1E1E">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+
+            <!--СООБЩЕНИЕ-->
+            <Grid Grid.Row="0"
+                  Background="{StaticResource DarkColor}" >
+
+                <TextBlock x:Name="txMessage"
+                           Foreground="{StaticResource TextColor}"
+                           TextAlignment="Justify"
+                           VerticalAlignment="Top"
+                           TextWrapping="Wrap"
+                           FontSize="26"
+                           Margin="10,30,10,0"
+                           Text="Продукт на фотодатчике 1 слишком близко к предыдущему. Удалите все продукты с линии между датчиками 1 и 2 и проверьте их коды операцией Справка.">
+                </TextBlock>
+
+                <Button Content="Закрыть"
+                        Click="ButtonCancel_Click"
+                        Height="50"
+                Width="300"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                Margin="0,0,10,10"
+                Style="{StaticResource btnStyle}"
+                Background="{StaticResource LightColor}"
+                Foreground="{StaticResource TextColor}"
+                FontSize="{StaticResource fontSizeData}"/>
+
+            </Grid>
+
+            <Grid Grid.Row="2" 
+                  Background="{StaticResource DarkColor}" >
+
+            </Grid>
+
+        </Grid>
+    </Border>
+</Window>
